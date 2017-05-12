@@ -11,7 +11,7 @@ const FacebookAuthButton = ({ isFetching, onAuth }) => (
 
 FacebookAuthButton.propTypes = {
   isFetching: PropTypes.bool.isRequired,
-  onAuth: PropTypes.bool.isRequired,
+  onAuth: PropTypes.func.isRequired,
 };
 
 export default FacebookAuthButton;
