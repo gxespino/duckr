@@ -1,4 +1,4 @@
-import auth from 'helpers/auth'
+import auth, { logout } from 'helpers/auth'
 
 // ACTION CONSTANTS
 const AUTH_USER = 'AUTH_USER'
@@ -43,16 +43,26 @@ function fetchingUserSuccess (uid, user, timestamp) {
   }
 }
 
+// THUNKS
 export function fetchAndHandleAuthedUser () {
   return function (dispatch) {
     dispatch(fetchingUser())
 
-    auth().then((user) => {
-      dispatch(fetchingUserSuccess(user.uid, user, Date.now()))
-      dispatch(authUser(user.uid))
-    }).catch((error) => {
-      dispatch(fetchingUserFailure(error.msg))
-    })
+    return (
+      auth().then((user) => {
+        dispatch(fetchingUserSuccess(user.uid, user, Date.now()))
+        dispatch(authUser(user.uid))
+      }).catch((error) => {
+        dispatch(fetchingUserFailure(error.msg))
+      })
+    )
+  }
+}
+
+export function logoutAndUnauth () {
+  return function (dispatch) {
+    logout()
+    dispatch(unauthUser())
   }
 }
 

@@ -48,3 +48,7 @@ html, body {
 .button:hover {
   background: #1542A0;
 }
+
+.center {
+  text-align: center;
+}

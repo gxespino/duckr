@@ -17,3 +17,12 @@ export default function auth () {
     }
   })
 }
+
+export function checkIfAuthed (store) {
+  // ignore Firebase
+  return store.getState().isAuthed
+}
+
+export function logout () {
+  console.log('LOGGED OUT!')
+}
