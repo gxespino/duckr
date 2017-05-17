@@ -1,21 +1,9 @@
-export default function auth () {
-  return new Promise((resolve, reject) => {
-    const resolvePromise = true
+import { ref, firebaseAuth } from 'config/constants'
+import firebase from 'firebase'
 
-    if (resolvePromise) {
-      setTimeout(() => {
-        resolve({
-          name: 'Glenn Espinosa',
-          avatar: 'http://gespinosa.org/assets/images/avatar@2x.png',
-          uid: 'glennespinosa',
-        })
-      }, 2000)
-    } else {
-      reject({
-        msg: 'Something went wrong with authentication!'
-      })
-    }
-  })
+export default function auth () {
+  return firebaseAuth()
+    .signInWithPopup(new firebase.auth.FacebookAuthProvider())
 }
 
 export function checkIfAuthed (store) {
@@ -24,5 +12,12 @@ export function checkIfAuthed (store) {
 }
 
 export function logout () {
+  return firebaseAuth().signOut()
   console.log('LOGGED OUT!')
+}
+
+export function saveUser (user) {
+  return ref.child(`users/${user.uid}`)
+    .set(user)
+    .then(() => user)
 }
